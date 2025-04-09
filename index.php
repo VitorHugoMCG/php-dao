@@ -20,8 +20,15 @@
     //$usuario->login("vitor","torugo");
     //echo $usuario;
 
-    $aluno = new Usuario("aluno4","teste#3asdaga");
-    $aluno->insert();
-    echo $aluno;
+    //Criando um novo usuario
+    //$aluno = new Usuario("aluno4","teste#3asdaga");
+    //$aluno->insert();
+    //echo $aluno;
+
+    $usuario = new Usuario();
+    $usuario->loadById(8); // Carrega o usuário com ID 8
+    $usuario->update("naruto", "novasenha"); // Agora o ID está definido
+
+    echo $usuario;
 
 ?>

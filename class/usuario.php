@@ -47,11 +47,11 @@ class Usuario {
 
         $sql = new Sql();
 
-        $result = $sql->select("SELECT * FROM tb_usuarios WHERE idusuario = :ID", array(
+        $results = $sql->select("SELECT * FROM tb_usuarios WHERE idusuario = :ID", array(
             ":ID"=>$id
         ));
 
-        if (isset($result[0])) { 
+        if (isset($results[0])) { 
             $this->setData($results[0]);
         }
     }
@@ -75,12 +75,12 @@ class Usuario {
 
         $sql = new Sql();
 
-        $result = $sql->select("SELECT * FROM tb_usuarios WHERE deslogin = :LOGIN AND dessenha = :PASSWORD", array(
+        $results = $sql->select("SELECT * FROM tb_usuarios WHERE deslogin = :LOGIN AND dessenha = :PASSWORD", array(
             ":LOGIN"=>$login,
             ":PASSWORD"=>$password
         ));
 
-        if (isset($result[0])) { 
+        if (isset($results[0])) { 
             $this->setData($results[0]);
         }else{
             throw new Exception("Login ou senha inválidos.");
@@ -106,6 +106,20 @@ class Usuario {
         if (count($results) > 0) {
             $this->setData($results[0]);
         }   
+    }
+
+    public function update($login, $password) {
+        $this->setDeslogin($login);
+        $this->setDessenha($password);
+    
+        $sql = new Sql();
+        $sql->execQuery("UPDATE tb_usuarios SET deslogin = :LOGIN, dessenha = :PASSWORD WHERE idusuario = :ID", array(
+            ':LOGIN' => $this->getDeslogin(),
+            ':PASSWORD' => $this->getDessenha(),
+            ':ID' => $this->getIdusuario()
+        ));
+    
+
     }
 
     public function __construct($login = "", $password = ""){
